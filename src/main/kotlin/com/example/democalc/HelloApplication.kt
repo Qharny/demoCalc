@@ -16,5 +16,6 @@ class HelloApplication : Application() {
 }
 
 fun main() {
+    
     Application.launch(HelloApplication::class.java)
 }
