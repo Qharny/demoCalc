@@ -1,10 +1,14 @@
-package com.example.democalc
-
+import javafx.event.ActionEvent
 import javafx.fxml.FXML
 import javafx.scene.control.Button
 import javafx.scene.control.TextArea
+import javafx.scene.layout.AnchorPane
+import java.util.*
 
-class MyController {
+class HelloController {
+
+    @FXML
+    private lateinit var MyController: AnchorPane
 
     @FXML
     private lateinit var bracketClose: Button
@@ -83,5 +87,72 @@ class MyController {
 
     @FXML
     private lateinit var zero: Button
+
+    @FXML
+    fun onClick(event: ActionEvent) {
+        val source = event.source as Button
+        val buttonText = source.text
+        var currentText = txtArea.text
+
+        when (buttonText) {
+            "C" -> {
+                // Clear the text area
+                currentText = ""
+            }
+            "⌫" -> {
+                // Remove the last character if the text is not empty
+                if (currentText.isNotEmpty()) {
+                    currentText = currentText.dropLast(1)
+                }
+            }
+            "=" -> {
+                // Evaluate the expression in the text area
+                try {
+                    val result = evaluateExpression(currentText)
+                    currentText = result.toString()
+                } catch (e: Exception) {
+                    // Handle invalid expressions
+                    currentText = "Error"
+                }
+            }
+            ".", "+", "-", "*", "/" -> {
+                // Append the operator to the text area if it's a valid position
+                if (currentText.isNotEmpty() && currentText.last() !in arrayOf('.', '+', '-', '*', '/')) {
+                    currentText += buttonText
+                }
+            }
+            else -> {
+                // Append the text of the clicked button to the text area
+                currentText += buttonText
+            }
+        }
+
+        // Update the text area with the new text
+        txtArea.text = currentText
+    }
+
+    private fun evaluateExpression(expression: String): Double {
+        val tokens = expression.split("\\s+".toRegex())
+        val stack = Stack<Double>()
+
+        for (token in tokens) {
+            if (token.matches("-?\\d+(\\.\\d+)?".toRegex())) {
+                stack.push(token.toDouble())
+            } else {
+                val operand2 = stack.pop()
+                val operand1 = stack.pop()
+                val result = when (token) {
+                    "+" -> operand1 + operand2
+                    "-" -> operand1 - operand2
+                    "*" -> operand1 * operand2
+                    "/" -> operand1 / operand2
+                    else -> throw IllegalArgumentException("Invalid operator: $token")
+                }
+                stack.push(result)
+            }
+        }
+
+        return stack.pop()
+    }
 
 }
