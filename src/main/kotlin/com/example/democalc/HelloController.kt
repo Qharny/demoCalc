@@ -1,14 +1,12 @@
+package com.example.democalc
+
 import javafx.event.ActionEvent
 import javafx.fxml.FXML
 import javafx.scene.control.Button
 import javafx.scene.control.TextArea
-import javafx.scene.layout.AnchorPane
 import java.util.*
 
 class HelloController {
-
-    @FXML
-    private lateinit var MyController: AnchorPane
 
     @FXML
     private lateinit var bracketClose: Button
