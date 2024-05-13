@@ -9,31 +9,22 @@ import java.util.*
 class HelloController {
 
     @FXML
-    private lateinit var bracketClose: Button
-
-    @FXML
-    private lateinit var bracketOpen: Button
-
-    @FXML
     private lateinit var clear: Button
 
     @FXML
-    private lateinit var dZero: Button
+    private lateinit var closeBracket: Button
 
     @FXML
     private lateinit var delete: Button
 
     @FXML
-    private lateinit var divide: Button
-
-    @FXML
-    private lateinit var dot: Button
+    private lateinit var doubleZero: Button
 
     @FXML
     private lateinit var eight: Button
 
     @FXML
-    private lateinit var equals: Button
+    private lateinit var equal: Button
 
     @FXML
     private lateinit var five: Button
@@ -57,10 +48,16 @@ class HelloController {
     private lateinit var one: Button
 
     @FXML
+    private lateinit var openBracket: Button
+
+    @FXML
     private lateinit var percent: Button
 
     @FXML
     private lateinit var plus: Button
+
+    @FXML
+    private lateinit var point: Button
 
     @FXML
     private lateinit var seven: Button
@@ -69,7 +66,10 @@ class HelloController {
     private lateinit var six: Button
 
     @FXML
-    private lateinit var square: Button
+    private lateinit var sqrt: Button
+
+    @FXML
+    private lateinit var textArea: TextArea
 
     @FXML
     private lateinit var three: Button
@@ -81,17 +81,13 @@ class HelloController {
     private lateinit var two: Button
 
     @FXML
-    private lateinit var txtArea: TextArea
-
-    @FXML
     private lateinit var zero: Button
 
     @FXML
-    fun onClick(event: ActionEvent) {
+    fun onclick(event: ActionEvent) {
         val source = event.source as Button
         val buttonText = source.text
-        var currentText = txtArea.text
-
+        var currentText = textArea.text
         when (buttonText) {
             "C" -> {
                 // Clear the text area
@@ -126,7 +122,7 @@ class HelloController {
         }
 
         // Update the text area with the new text
-        txtArea.text = currentText
+        textArea.text = currentText
     }
 
     private fun evaluateExpression(expression: String): Double {
@@ -152,5 +148,6 @@ class HelloController {
 
         return stack.pop()
     }
+
 
 }
