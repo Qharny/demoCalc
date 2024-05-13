@@ -9,12 +9,6 @@ import java.util.*
 class HelloController {
 
     @FXML
-    private lateinit var clear: Button
-
-    @FXML
-    private lateinit var closeBracket: Button
-
-    @FXML
     private lateinit var delete: Button
 
     @FXML
