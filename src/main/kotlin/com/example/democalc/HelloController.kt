@@ -119,14 +119,21 @@ class HelloController {
         textArea.text = currentText
     }
 
-    private fun evaluateExpression(expression: String): Double {
+    private fun evaluateExpression(expression: String?): Double {
+        if (expression.isNullOrEmpty()) {
+            throw IllegalArgumentException("Expression cannot be null or empty")
+        }
+
+        // Split the expression into tokens
         val tokens = expression.split("\\s+".toRegex())
         val stack = Stack<Double>()
 
         for (token in tokens) {
             if (token.matches("-?\\d+(\\.\\d+)?".toRegex())) {
+                // If the token is a number, push it onto the stack
                 stack.push(token.toDouble())
             } else {
+                // If the token is an operator, pop operands from the stack and perform the operation
                 val operand2 = stack.pop()
                 val operand1 = stack.pop()
                 val result = when (token) {
@@ -136,12 +143,15 @@ class HelloController {
                     "/" -> operand1 / operand2
                     else -> throw IllegalArgumentException("Invalid operator: $token")
                 }
+                // Push the result back onto the stack
                 stack.push(result)
             }
         }
 
+        // The final result will be at the top of the stack
         return stack.pop()
     }
+
 
 
 }
